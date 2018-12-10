@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {Course} from "../model/course";
+import {ActivatedRoute} from '@angular/router';
+import {Course} from '../model/course';
 import {
     debounceTime,
     distinctUntilChanged,
@@ -56,10 +56,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
             switchMap(search => this.loadLessons(search))
         );
         const initialLessons$ = this.loadLessons();
-        this.lessons$ = concat(initialLessons$, searchLessons$)
-
-
-
+        this.lessons$ = concat(initialLessons$, searchLessons$);
     }
 
     loadLessons(search = ''): Observable<Lesson[]> {
