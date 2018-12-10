@@ -16,6 +16,7 @@ import {
 import {merge, fromEvent, Observable, concat, interval} from 'rxjs';
 import {Lesson} from '../model/lesson';
 import { createHttpObservable } from '../common/util';
+import { RxJsLoggingLevel, debug } from '../common/debug';
 
 
 @Component({
@@ -50,10 +51,12 @@ export class CourseComponent implements OnInit, AfterViewInit {
         fromEvent<any>(this.input.nativeElement, 'keyup').pipe(
             map(event => event.target.value),
             startWith(''),
-            throttleTime(500)
-            // distinctUntilChanged(),
-            // switchMap(search => this.loadLessons(search))
-        ).subscribe(console.log);
+            debug(RxJsLoggingLevel.INFO, 'search '),
+            debounceTime(500),
+            distinctUntilChanged(),
+            switchMap(search => this.loadLessons(search)),
+            debug(RxJsLoggingLevel.INFO, 'course value ')
+        ).subscribe();
 
     }
 
